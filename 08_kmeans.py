@@ -59,4 +59,3 @@ lithofacies = ['facie 1',
                'facie 9']
 # NOTE plot kmean plus centroids
 F.kmeans_plot_centroids(data['GR'], data['ILD_log10'], facies, number_of_clusters, lithofacies, k_data)
-ddd
