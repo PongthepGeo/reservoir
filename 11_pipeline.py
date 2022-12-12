@@ -18,7 +18,8 @@ from sklearn import metrics
 step 1: input well-log data
 '''
 
-data = pd.read_csv('../datasets/well_logs.csv')
+# data = pd.read_csv('../datasets/well_logs.csv')
+data = pd.read_csv('../reservoir_characteristics/datasets/well_logs.csv')
 data = data.sort_values(by='Depth', ascending=True)
 
 '''
@@ -44,14 +45,14 @@ nor_data = F.normalization(data, drop_cols, log_names)
 nor_data.fillna(-999, inplace=True)
 miss_data = F.missing_value(nor_data, 'nor_PE')
 # print(miss_data)
-miss_data.to_csv ('../save_tabular/demo.csv', index = None, header=True) 
+# miss_data.to_csv ('../save_tabular/demo.csv', index = None, header=True) 
 
 '''
 step 4: apply encoder at missing values --> we will add one column contained binary data in which indicates data exist and the missing one. 
 '''
 
 en_data = F.encoder(miss_data)
-# en_data.to_csv ('../save_tabular/demo.csv', index = None, header=True) 
+# en_data.to_csv ('../reservoir_characteristics/save_tabular/demo_en_data.csv', index = None, header=True) 
 
 '''
 step 5: preparing data for training, validation, and testing. To prove that an inference (trained model) can predict unknown data accurately, geoscientists test the whole well to prove it. In comparison, general ML splits one well into several pieces of facies.
@@ -64,7 +65,7 @@ train = en_data.loc[en_data['Well Name'] != selected_well]
 test  = en_data.loc[en_data['Well Name'] == selected_well]
 # NOTE training data use some columns for training 
 drop_cols = ['Facies', 'Formation', 'Well Name', 'Depth', 'formation_cat'] 
-X = train.drop(drop_cols, axis=1 ) # select training feature 
+X = train.drop(drop_cols, axis=1) # select training feature 
 y = train['Facies'] # select training label
 X_test = test.drop(drop_cols, axis=1) # select testing feature
 y_test = test['Facies'] # select testing label
@@ -152,3 +153,20 @@ _, list_true_facies, list_pre_facies = F.custom_metric(test,
                                                        'test')
 print('list true facies: ', list_true_facies)
 print('list prediction facies: ', list_pre_facies)
+
+'''
+step 10: feature importances
+'''
+
+# NOTE feature importance
+plt.figure(figsize=(6, 12))
+plt.bar(range(len(clf_xgb.feature_importances_)), clf_xgb.feature_importances_)
+print(len(clf_xgb.feature_importances_))
+drop_cols_2 = ['Facies', 'Formation', 'Well Name', 'Depth', 'formation_cat'] 
+new_en_data = en_data.drop(drop_cols_2, axis=1) # select training feature 
+labels = new_en_data.columns[:]
+x = np.arange(0, len(labels), 1)
+plt.xticks(x, labels, rotation=90)
+plt.ylabel('values (the more is the better)')
+plt.title('Feature Importances', fontweight='bold')
+plt.show()
