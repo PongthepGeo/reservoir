@@ -13,7 +13,8 @@ from sklearn.model_selection import train_test_split
 step 1: input well-log data
 '''
 
-data = pd.read_csv('../datasets/well_logs.csv')
+# data = pd.read_csv('../datasets/well_logs.csv')
+data = pd.read_csv('../reservoir_characteristics/datasets/well_logs.csv')
 
 '''
 step 2: plot scatter
@@ -51,10 +52,10 @@ labels = data['Facies']
 step 3: compute decision trees
 '''
 
-title = 'Decision Tree (Max Depth: 20)'
+title = 'Decision Tree (Max Depth: 10)'
 ytitle = data.columns[5]
 xtitle = data.columns[4]
-F.visualize_classifier(DecisionTreeClassifier(max_depth=20), lithocolors,
+F.visualize_classifier(DecisionTreeClassifier(max_depth=10), lithocolors,
                         data['GR'], data['ILD_log10'], lithofacies,
                         data['Facies'],
                         title, ytitle, xtitle,
