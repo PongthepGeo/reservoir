@@ -1,9 +1,11 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-
+import matplotlib.colors as colors
 import seaborn as sns
+
 from sklearn import preprocessing
+from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 def data_transformation(data, drop_cols, log_names):# shift mean to zero
 	dummy = data.drop(drop_cols, axis=1)
@@ -58,6 +60,37 @@ def donut(data, label_1, environment, lithofacies, litho_colors, save_file):
 	plt.savefig('image_out/' + save_file + '.svg', format='svg', bbox_inches='tight', transparent=True, pad_inches=0.2)
 	plt.show()
 
+def log_9_facies(logs, facies_colors, log_colors, log_names, save_file):
+	logs = logs.sort_values(by='Depth')
+	cmap_facies = colors.ListedColormap(facies_colors[0:len(facies_colors)], 'indexed')
+	ztop = logs.Depth.min(); zbot=logs.Depth.max()
+	cluster = np.repeat(np.expand_dims(logs['Facies'].values,1), 100, 1)
+	f, ax = plt.subplots(nrows=1, ncols=6, figsize=(8, 12))
+	for count, item in enumerate(log_names):
+		ax[count].plot(logs[item], logs.Depth, color=log_colors[count])
+	im = ax[count+1].imshow(cluster, interpolation='none', aspect='auto', cmap=cmap_facies, vmin=1, vmax=9)
+	divider = make_axes_locatable(ax[count+1])
+	cax = divider.append_axes('right', size='20%', pad=0.05)
+	cbar = plt.colorbar(im, cax=cax)
+	#! spaces are matter ' SS '
+	cbar.set_label((17*' ').join([' SS ', 'CSiS', 'FSiS', 'SiSh', ' MS ', ' WS ', ' D  ', ' PS ', ' BS ']))
+	cbar.set_ticks([1, 2, 3, 4, 5, 6, 7, 8, 9]); cbar.set_ticks([])
+	cbar.set_ticks([])
+	for i in range(len(ax)-1):
+		ax[i].set_ylim(ztop, zbot)
+		ax[i].invert_yaxis()
+		ax[i].grid()
+		ax[i].locator_params(axis='x', nbins=3)
+	for count, item in enumerate(log_names):
+		ax[count].set_xlabel(str(item))
+		ax[count].set_xlim(logs[item].min(), logs[item].max()) 
+		ax[count+1].set_yticklabels([])
+	ax[count+1].set_xlabel('Facies')
+	ax[count+1].set_xticklabels([])
+	f.suptitle('Well: %s'%logs.iloc[0]['Well Name'], fontsize=14, y=0.92)
+	plt.savefig('image_out/' + save_file + '.svg', format='svg', bbox_inches='tight', transparent=True, pad_inches=0)
+	plt.show()
+
 #$$$$$$$$$$$$$$$$$$$$$$$$$
 data = pd.read_csv('../reservoir_characteristics/datasets/well_logs.csv')
 
@@ -86,7 +119,9 @@ drop_cols     = ['Facies', 'Formation', 'Well Name', 'Depth', 'NM_M', 'RELPOS']
 label_col     = 'Facies'
 selected_well = data.loc[data['Well Name'] == 'CROSS H CATTLE']
 
-donut(data, 'Facies', environment, lithofacies, lithocolors, 'test')
+# donut(data, 'Facies', environment, lithofacies, lithocolors, 'test')
+log_9_facies(selected_well, lithocolors, log_colors, log_names, 'test')
+
 # # NOTE normalize data
 # normalized_data = data_transformation(data, drop_cols, log_names)
 # # print(normalized_data)
