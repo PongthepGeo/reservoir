@@ -11,7 +11,8 @@ import matplotlib.pyplot as plt
 step 1: input well-log data
 '''
 
-data = pd.read_csv('../datasets/well_logs.csv')
+# data = pd.read_csv('../datasets/well_logs.csv')
+data = pd.read_csv('../reservoir_characteristics/datasets/well_logs.csv')
 # print(data)
 
 '''
