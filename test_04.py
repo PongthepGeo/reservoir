@@ -91,8 +91,22 @@ def log_9_facies(logs, facies_colors, log_colors, log_names, save_file):
 	plt.savefig('image_out/' + save_file + '.svg', format='svg', bbox_inches='tight', transparent=True, pad_inches=0)
 	plt.show()
 
+def scatter_plt(x, y, facies, lithocolors, lithofacies, title, ylabel, xlabel, save_file):
+	cmap = colors.ListedColormap(lithocolors)
+	scatter = plt.scatter(x, y, c=facies, s=30, edgecolors='None', alpha=1.0, cmap=cmap, marker='X')
+	plt.title(title, fontsize=14, fontweight='bold')
+	plt.ylabel(ylabel, fontsize=11, fontweight='bold')
+	plt.xlabel(xlabel, fontsize=11, fontweight='bold')
+	# plt.xlim(0, 350); plt.ylim(0, 80)
+	plt.legend(handles=scatter.legend_elements()[0], labels=lithofacies, frameon=True, loc='lower right')
+	plt.savefig('image_out/' + save_file + '.svg', format='svg', bbox_inches='tight', transparent=True, pad_inches=0)
+	plt.show()
+
 #$$$$$$$$$$$$$$$$$$$$$$$$$
 data = pd.read_csv('../reservoir_characteristics/datasets/well_logs.csv')
+
+well_names = data['Well Name'].unique()
+print(well_names)
 
 lithocolors = ['#F4D03F', # Nonmarine sandstone
                '#F5B041', # Nonmarine coarse siltstone
@@ -117,10 +131,11 @@ log_names     = ['GR', 'ILD_log10', 'DeltaPHI', 'PHIND', 'PE']
 log_colors    = ['green', 'blue', 'grey', 'red', 'black']
 drop_cols     = ['Facies', 'Formation', 'Well Name', 'Depth', 'NM_M', 'RELPOS']
 label_col     = 'Facies'
-selected_well = data.loc[data['Well Name'] == 'CROSS H CATTLE']
+selected_well = data.loc[data['Well Name'] == 'LUKE G U']
 
 # donut(data, 'Facies', environment, lithofacies, lithocolors, 'test')
-log_9_facies(selected_well, lithocolors, log_colors, log_names, 'test')
+# log_9_facies(selected_well, lithocolors, log_colors, log_names, 'test')
+scatter_plt(data.GR, data.ILD_log10, data.Facies, lithocolors, lithofacies, 'Raw Data', 'ILD_log10', 'GR (\u03B3)', 'rawdata')
 
 # # NOTE normalize data
 # normalized_data = data_transformation(data, drop_cols, log_names)
