@@ -38,6 +38,27 @@ def pairplot_scatter(data, facies_labels, label_col, facies_colors, drop_cols, s
 	plt.savefig('image_out/' + save_file + '.png', format='png', dpi=300, bbox_inches='tight', transparent=False, pad_inches=0.2)
 	plt.show()
 
+def donut(data, label_1, environment, lithofacies, litho_colors, save_file):
+	dummy = data[label_1].value_counts().sort_index(ascending=True)
+	dummy = dummy.to_numpy() # convert pandas to array
+	env = np.zeros(shape=3, dtype=np.float)
+	env[0] = dummy[:3].sum() # non-marine 
+	env[1] = dummy[3] # marine
+	env[2] = dummy[4:].sum() # transition 
+	# NOTE ring outside
+	_, ax = plt.subplots(figsize=(15, 15))
+	ax.axis('equal')
+	env_colors = ['grey', 'Aqua', '#808000']
+	ring_1, _ = ax.pie(env, radius=1.3, colors=env_colors, labels=environment, textprops={'fontsize': 24})
+	plt.setp(ring_1, width=0.5, edgecolor='black')
+	# NOTE ring inside
+	ring_2, _ = ax.pie(dummy, radius=1.3-0.3, labeldistance=0.7, colors=litho_colors, labels=lithofacies, textprops={'fontsize': 24})
+	plt.setp(ring_2, width=0.5, edgecolor='black')
+	plt.margins(0,0)
+	plt.savefig('image_out/' + save_file + '.svg', format='svg', bbox_inches='tight', transparent=True, pad_inches=0.2)
+	plt.show()
+
+#$$$$$$$$$$$$$$$$$$$$$$$$$
 data = pd.read_csv('../reservoir_characteristics/datasets/well_logs.csv')
 
 lithocolors = ['#F4D03F', # Nonmarine sandstone
@@ -65,11 +86,12 @@ drop_cols     = ['Facies', 'Formation', 'Well Name', 'Depth', 'NM_M', 'RELPOS']
 label_col     = 'Facies'
 selected_well = data.loc[data['Well Name'] == 'CROSS H CATTLE']
 
-# NOTE normalize data
-normalized_data = data_transformation(data, drop_cols, log_names)
-# print(normalized_data)
-# NOTE remove outliers
-max_out = [0.995, 0.995, 0.995, 0.995, 0.995] # ordering by wirelines
-for count, item in enumerate(log_names):
-    normalized_data = remove_outliers(normalized_data, item, 0., max_out[count])
-pairplot_scatter(normalized_data, lithofacies, label_col, lithocolors, drop_cols, 'test')
+donut(data, 'Facies', environment, lithofacies, lithocolors, 'test')
+# # NOTE normalize data
+# normalized_data = data_transformation(data, drop_cols, log_names)
+# # print(normalized_data)
+# # NOTE remove outliers
+# max_out = [0.995, 0.995, 0.995, 0.995, 0.995] # ordering by wirelines
+# for count, item in enumerate(log_names):
+#     normalized_data = remove_outliers(normalized_data, item, 0., max_out[count])
+# pairplot_scatter(normalized_data, lithofacies, label_col, lithocolors, drop_cols, 'test')
