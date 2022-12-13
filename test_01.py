@@ -16,6 +16,8 @@ y = eq_1(m, x, c)
 d = 8
 yy = eq_2(m, x, d)
 # NOTE plot
-plt.scatter(x ,y)
-plt.scatter(x ,yy)
-plt.show()
+# plt.scatter(x ,y)
+# plt.scatter(x ,yy)
+# plt.show()
+
+print(x.shape)

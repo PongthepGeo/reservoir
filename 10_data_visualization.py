@@ -10,7 +10,8 @@ import pandas as pd
 step 1: input well-log data
 '''
 
-data = pd.read_csv('../datasets/well_logs.csv')
+# data = pd.read_csv('../datasets/well_logs.csv')
+data = pd.read_csv('../reservoir_characteristics/datasets/well_logs.csv')
 
 '''
 step 2: explore data
@@ -81,10 +82,10 @@ normalized_data = F.data_transformation(data, drop_cols, log_names)
 max_out = [0.995, 0.995, 0.995, 0.995, 0.995] # ordering by wirelines
 for count, item in enumerate(log_names):
     normalized_data = F.remove_outliers(normalized_data, item, 0., max_out[count])
-# F.pairplot_scatter(normalized_data, lithofacies, label_col, lithocolors, drop_cols, 'test')
+F.pairplot_scatter(normalized_data, lithofacies, label_col, lithocolors, drop_cols, 'test')
 # NOTE single scatter plot
-F.scatter_plt(data.GR, data.ILD_log10, data.Facies, lithocolors, lithofacies, 'Raw Data', 'ILD_log10', 'GR (\u03B3)', 'rawdata')
+# F.scatter_plt(data.GR, data.ILD_log10, data.Facies, lithocolors, lithofacies, 'Raw Data', 'ILD_log10', 'GR (\u03B3)', 'rawdata')
 # F.scatter_plt(normalized_data.GR, normalized_data.ILD_log10, normalized_data.Facies, lithocolors, lithofacies, 'Normalized Data and Outlier Remover', 'ILD_log10', 'GR (\u03B3)', 'test')
 # NOTE fractor (validation) 
-normalized_data = normalized_data.sample(frac=.2, random_state=1)
+# normalized_data = normalized_data.sample(frac=.2, random_state=1)
 # F.scatter_plt(data.GR, data.PHIND, data.Facies, lithocolors, lithofacies, 'Validating Data (20%)', 'PHIND', 'Gamma (\u03B3)', 'frac_.2')

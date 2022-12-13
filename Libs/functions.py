@@ -315,7 +315,7 @@ def pairplot_scatter(data, facies_labels, label_col, facies_colors, drop_cols, s
 	g.add_legend()
 	# g.fig.subplots_adjust(top=0.9)
 	# g.fig.suptitle(title)
-	plt.savefig('../image_out/' + save_file + '.png', format='png', dpi=300, bbox_inches='tight', transparent=False, pad_inches=0.2)
+	plt.savefig('image_out/' + save_file + '.png', format='png', dpi=300, bbox_inches='tight', transparent=False, pad_inches=0.2)
 	plt.show()
 
 def scatter_plt(x, y, facies, lithocolors, lithofacies, title, ylabel, xlabel, save_file):
