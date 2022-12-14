@@ -26,9 +26,17 @@ step 2: encoder. XGBoost needs input labels as an interger with beginning with 0
 '''
 
 le = LabelEncoder()
-# data['Facies'] = le.fit_transform(data['Facies'])
+data['Facies'] = le.fit_transform(data['Facies'])
 # print(sorted(data.Facies.unique()))
-data['Formation'] = le.fit_transform(data['Formation'])
-# print(sorted(data.Facies.unique()))
-print(data['Formation'][0:5])
-# print(data.loc[1][0:5])
+
+# NOTE normalizing
+drop_cols = ['Facies', 'Formation', 'Well Name', 'Depth'] 
+log_names = ['GR', 'ILD_log10',	'DeltaPHI', 'PHIND', 'PE', 'NMM_M', 'RELPOS']
+nor_data = F.normalization(data, drop_cols, log_names)
+# print('xxx')
+
+# NOTE fill NaN with -999
+nor_data.fillna(-999, inplace=True)
+miss_data = F.missing_value(nor_data, 'nor_PE')
+# print(miss_data)
+miss_data.to_csv ('demo.csv', index = None, header=True) 
