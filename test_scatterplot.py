@@ -4,9 +4,10 @@ xxx = tong.read_csv('../reservoir_characteristics/datasets/well_logs.csv')
 
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
-def scatter_plt(x, y, facies, lithocolors, lithofacies, title, ylabel, xlabel, save_file):
+def scatter_plt(x, y, xx, yy, facies, lithocolors, lithofacies, title, ylabel, xlabel, save_file):
 	cmap = colors.ListedColormap(lithocolors)
-	scatter = plt.scatter(x, y, c=facies, s=30, edgecolors='None', alpha=1.0, cmap=cmap, marker='X')
+	scatter = plt.scatter(x, y, c=facies, s=30, edgecolors='None', alpha=0.5, cmap=cmap, marker='*')
+	scatter = plt.scatter(xx, yy, c=facies, s=30, edgecolors='None', alpha=1, cmap=cmap, marker='X')
 	plt.title(title, fontsize=14, fontweight='bold')
 	plt.ylabel(ylabel, fontsize=11, fontweight='bold')
 	plt.xlabel(xlabel, fontsize=11, fontweight='bold')
@@ -35,5 +36,5 @@ lithofacies = ['SS',
                'BS']
 # scatter plot
 data = xxx
-scatter_plt(data.GR, data.ILD_log10, data.Facies, lithocolors, lithofacies, 'Raw Data', 'ILD_log10', 'GR (\u03B3)', 'rawdata')
+scatter_plt(data.PE, data.DeltaPHI, data.ILD_log10, data.PHIND, data.Facies, lithocolors, lithofacies, 'Raw Data', 'ILD_log10', 'GR (\u03B3)', 'rawdata')
 
