@@ -20,7 +20,9 @@ for count, item in enumerate(log_names):
 # print(done_data)
 
 import matplotlib.pyplot as plt
-plt.scatter(y.GR, y.ILD_log10, s=30, edgecolors='None', alpha=1, cmap='red', marker='o')
-plt.scatter(yy.GR, yy.ILD_log10, s=30, edgecolors='None', alpha=0.5, cmap='black', marker='*')
+plt.scatter(y.GR, y.ILD_log10, s=30, edgecolors='None', alpha=1, c='red', marker='o')
+plt.scatter(yy.GR, yy.ILD_log10, s=30, edgecolors='None', alpha=0.5, c='green', marker='*')
+# plt.savefig('data_out/' + save_file + '.svg', format='svg', bbox_inches='tight',\
+plt.savefig('test.png', format='png', dpi=300, bbox_inches='tight', transparent=True, pad_inches=0.1)
 plt.show()
 
