@@ -62,6 +62,6 @@ en_data.to_csv ('../reservoir_characteristics/save_tabular/demo_en_data.csv', in
 selected_well = 'KIMZEY A'
 well_names_test = ['SHRIMPLIN', 'ALEXANDER D', 'SHANKLE', 'LUKE G U', 'KIMZEY A', 'CROSS H CATTLE', 'NOLAN', 'Recruit F9', 'NEWBY', 'CHURCHMAN BIBLE']
 for i in well_names_test:
-        train = en_data.loc[en_data['Well Name'] != i]
-        test  = en_data.loc[en_data['Well Name'] == i]
-        print('we are working on well: ', i)
+    train = en_data.loc[en_data['Well Name'] != i]
+    test  = en_data.loc[en_data['Well Name'] == i]
+    print('we are working on well: ', i)

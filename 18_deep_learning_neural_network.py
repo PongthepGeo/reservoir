@@ -23,8 +23,9 @@ from keras.wrappers.scikit_learn import KerasClassifier
 step 1: import well-log data. For DL, the training data and the validation data are already split.
 '''
 
-training_data = pd.read_csv('../datasets/training_data.csv')
-blind_data = pd.read_csv('../datasets/nofacies_data.csv')
+# data = pd.read_csv('../reservoir_characteristics/datasets/well_logs.csv')
+training_data = pd.read_csv('../reservoir_characteristics/datasets/training_data.csv')
+blind_data = pd.read_csv('../reservoir_characteristics/datasets/nofacies_data.csv')
 
 '''
 step 2: prepare data for training, validation and test. DL trains data using the stratified method, which inputs data into neurons by well-log, not splitting by facies.
