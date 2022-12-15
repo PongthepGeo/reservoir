@@ -2,7 +2,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as tong
 
-
 def data_transformation(data, drop_cols, log_names):# shift mean to zero
 	from sklearn import preprocessing
 	dummy = data.drop(drop_cols, axis=1)
@@ -11,6 +10,9 @@ def data_transformation(data, drop_cols, log_names):# shift mean to zero
 	for count, item in enumerate(log_names):
 		data[item] = dummy[:, count]
 	return data
+
+def label_facies_1(row, labels, label_col):
+	return labels[row[label_col]-1]
 
 def pairplot_scatter(data, facies_labels, label_col, facies_colors, drop_cols, save_file):
 	# create new col named Lithofacies to store facies_labels
@@ -26,13 +28,8 @@ def pairplot_scatter(data, facies_labels, label_col, facies_colors, drop_cols, s
 					hue_order=list(facies_labels), 
 					)
 	g.map_offdiag(sns.scatterplot, edgecolor='gray', marker='X')
-	# g.map_offdiag(sns.scatterplot, edgecolor='none', alpha=0.3, sizes=35, markers='x')
 	g.map_diag(sns.histplot, multiple="stack", element="step")
-	# g.map_offdiag(sns.kdeplot, multiple="stack")
-	# g.set(xticks=[-3, 0, 3], yticks=[-, 6, 10])
 	g.add_legend()
-	# g.fig.subplots_adjust(top=0.9)
-	# g.fig.suptitle(title)
 	plt.savefig('image_out/' + save_file + '.png', format='png', dpi=300, bbox_inches='tight', transparent=False, pad_inches=0.2)
 	plt.show()
 
@@ -59,12 +56,7 @@ lithofacies = ['SS',
 
 log_names     = ['GR', 'ILD_log10', 'DeltaPHI', 'PHIND', 'PE']
 drop_cols     = ['Facies', 'Formation', 'Well Name', 'Depth', 'NM_M', 'RELPOS']
-# normalized_data = data_transformation(xxx, drop_cols, log_names)
 
-testwell = xxx['GR']
-plt.plot(testwell)
-plt.show()
-
-
-
-# pairplot_scatter(normalized_data, lithofacies, 'Facies', lithocolors, drop_cols, 'test')
+# NOTE normalize data
+normalized_data = data_transformation(xxx, drop_cols, log_names)
+pairplot_scatter(normalized_data, lithofacies, 'Facies', lithocolors, drop_cols, 'test')
