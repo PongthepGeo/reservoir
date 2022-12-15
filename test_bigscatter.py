@@ -35,6 +35,7 @@ def pairplot_scatter(data, facies_labels, label_col, facies_colors, drop_cols, s
 
 # NOTE import well-logs
 xxx = tong.read_csv('../reservoir_characteristics/datasets/well_logs.csv')
+
 lithocolors = ['#F4D03F', # Nonmarine sandstone
                '#F5B041', # Nonmarine coarse siltstone
                '#DC7633', # Nonmarine fine siltstone
