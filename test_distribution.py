@@ -63,7 +63,7 @@ en_data.to_csv ('../reservoir_characteristics/save_tabular/demo_en_data.csv', in
 drop_col_2 = ['NM_M', 'nor_GR', 'nor_ILD_log10','nor_DeltaPHI',	'nor_PHIND',	'nor_PE', 'nor_NMM_M',	'nor_RELPOS', 'miss'] 
 en_data = en_data.drop(drop_col_2, axis=1)
 
-selected_well = 'KIMZEY A'
+selected_well = 'SHANKLE'
 well_names_test = ['SHRIMPLIN', 'ALEXANDER D', 'SHANKLE', 'LUKE G U', 'KIMZEY A', 'CROSS H CATTLE', 'NOLAN', 'Recruit F9', 'NEWBY', 'CHURCHMAN BIBLE']
 train = en_data.loc[en_data['Well Name'] != selected_well]
 test  = en_data.loc[en_data['Well Name'] == selected_well]
@@ -75,5 +75,5 @@ X_test = test.drop(drop_cols, axis=1) # select testing feature
 y_test = test['Facies'] # select testing label
 # print(X)
 # print(y)
-dummy = data['Facies'].value_counts().sort_index(ascending=True)
+dummy = test['Facies'].value_counts().sort_index(ascending=True)
 print(dummy)
