@@ -104,7 +104,7 @@ def objective(trial, data=X, target=y):
 step 7: begin optimization
 '''
 
-n_train_iter = 50
+n_train_iter = 100
 sampler = optuna.samplers.TPESampler(seed=42, multivariate=True) 
 pruner = optuna.pruners.MedianPruner()
 study = optuna.create_study(sampler=sampler, pruner=pruner, direction='minimize')

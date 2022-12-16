@@ -77,7 +77,7 @@ y_test = test['Facies'] # select testing label
 # print(y)
 # NOTE separate data for training and testing
 X_train, X_val, y_train, y_val = train_test_split(X, y,
-						  test_size=0.53,
+						  test_size=0.33,
 						  random_state=True,
 						  shuffle=y,
 						  stratify=y)
@@ -90,10 +90,12 @@ X_train, X_val, y_train, y_val = train_test_split(X, y,
 clf_xgb = xgb.XGBClassifier(booster='gbtree',
                         #     learning_rate=0.1,
                             learning_rate=1.5167330688076188e-05,
+                            # min_child_weight=249,
+                            min_child_weight=5,
+                            subsample=0.27638457617723067,
                             objective='multi:softprob',
-                            subsample=0.5,
-			    max_depth=20,
-			    n_estimators=200,
+			                max_depth=6,
+			                n_estimators=200,
 			#     tree_method='gpu_hist',
 			#     gpu_id=1,
                             verbosity=1)
