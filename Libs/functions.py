@@ -421,9 +421,7 @@ def DNN():
     model.add(Dense(205, input_dim=8, activation='relu', kernel_constraint=max_norm(5.)))
     model.add(Dense(64, kernel_constraint=max_norm(5.)))
     model.add(Dropout(0.1))
-    model.add(Dense(64, kernel_constraint=max_norm(5.)))
-    model.add(Dropout(0.1))
-    model.add(Dense(69, activation='relu'))
+    model.add(Dense(69, activation='sigmoid'))
     model.add(Dense(9, activation='softmax'))
     # Compilation
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])

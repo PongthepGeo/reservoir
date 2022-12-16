@@ -93,7 +93,11 @@ import matplotlib.pyplot as plt
 
 y_true = training_data.Facies.to_numpy()
 dummy = confusion_matrix(y_true, y_predicted)
+# print(dummy)
 disp = ConfusionMatrixDisplay(confusion_matrix=dummy)
 disp.plot(cmap='Greens') 
 plt.savefig('data_out/' + 'test' + '.svg', format='svg', bbox_inches='tight', transparent=True, pad_inches=0)
-plt.show()
+# plt.show()
+
+f1s = f1_score(y, y_predicted, average='weighted')
+print ('f1 training error: ', '{:f}'.format(f1s))
