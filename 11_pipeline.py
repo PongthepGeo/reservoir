@@ -88,7 +88,8 @@ X_train, X_val, y_train, y_val = train_test_split(X, y,
 
 # NOTE define parameters for fitting
 clf_xgb = xgb.XGBClassifier(booster='gbtree',
-                            learning_rate=0.1,
+                        #     learning_rate=0.1,
+                            learning_rate=1.5167330688076188e-05,
                             objective='multi:softprob',
                             subsample=0.5,
 			    max_depth=20,
@@ -146,17 +147,17 @@ print("Accuracy: %.2f%%" % (accuracy * 100.0))
 # # step 9: plot confusion matrices and custom evaluation 
 # # '''
 
-# # NOTE confusion matrices
-# lithofacies = ['SS', 'CSiS', 'FSiS', 'SiSh', 'MS', 'WS', 'D', 'PS', 'BS']
-# F.cm(y_pred, en_data, selected_well, lithofacies, 'confusion_matrix')
-# print(metrics.classification_report(y_test, y_pred))
-# # NOTE custom evaluation
-# _, list_true_facies, list_pre_facies = F.custom_metric(test,
-#                                                        'Facies',
-#                                                        predictions,
-#                                                        'test')
-# print('list true facies: ', list_true_facies)
-# print('list prediction facies: ', list_pre_facies)
+# NOTE confusion matrices
+lithofacies = ['SS', 'CSiS', 'FSiS', 'SiSh', 'MS', 'WS', 'D', 'PS', 'BS']
+F.cm(y_pred, en_data, selected_well, lithofacies, 'confusion_matrix')
+print(metrics.classification_report(y_test, y_pred))
+# NOTE custom evaluation
+_, list_true_facies, list_pre_facies = F.custom_metric(test,
+                                                       'Facies',
+                                                       predictions,
+                                                       'test')
+print('list true facies: ', list_true_facies)
+print('list prediction facies: ', list_pre_facies)
 
 # # '''
 # # step 10: feature importances

@@ -20,7 +20,8 @@ warnings.filterwarnings('ignore')
 step 1: input well-log data
 '''
 
-data = pd.read_csv('../datasets/well_logs.csv')
+# data = pd.read_csv('../datasets/well_logs.csv')
+data = pd.read_csv('../reservoir_characteristics/datasets/well_logs.csv')
 data = data.sort_values(by='Depth', ascending=True)
 
 '''

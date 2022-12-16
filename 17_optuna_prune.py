@@ -21,7 +21,8 @@ from sklearn.metrics import f1_score
 step 1: input well-log data
 '''
 
-data = pd.read_csv('../datasets/well_logs.csv')
+# data = pd.read_csv('../datasets/well_logs.csv')
+data = pd.read_csv('../reservoir_characteristics/datasets/well_logs.csv')
 data = data.sort_values(by='Depth', ascending=True)
 
 '''
@@ -91,7 +92,7 @@ def objective(trial, data=X, target=y):
         'min_child_weight': trial.suggest_int('min_child_weight', 1, 300)
     }
     model = xgb.XGBClassifier(**param,
-                              num_class=4,
+                              num_class=9,
                               eval_metric='mlogloss' # cost function
                               )
     model.fit(train_x, train_y, eval_set=[(test_x, test_y)], early_stopping_rounds=100,verbose=False)
