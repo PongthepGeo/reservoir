@@ -13,8 +13,8 @@ from sklearn.model_selection import train_test_split
 step 1: input well-log data
 '''
 
-# data = pd.read_csv('../datasets/well_logs.csv')
-data = pd.read_csv('../reservoir_characteristics/datasets/well_logs.csv')
+data = pd.read_csv('../datasets/well_logs.csv')
+# data = pd.read_csv('../reservoir_characteristics/datasets/well_logs.csv')
 
 '''
 step 2: plot scatter
